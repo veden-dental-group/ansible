@@ -1,0 +1,13 @@
+[Unit]
+Description = CIOS
+
+[Service]
+ExecStart=/etc/init.d/meteor.sh
+Restart=always
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=meteor
+
+[Install]
+WantedBy=multi-user.target

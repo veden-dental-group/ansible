@@ -1,0 +1,3 @@
+---
+- name: Provision newerp server
+  ansible.builtin.import_playbook: playbooks/setup-newerp.yml

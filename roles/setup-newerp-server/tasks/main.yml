@@ -1,0 +1,17 @@
+---
+# tasks file for setup-cios-server
+
+- name: Upgrade all packages to latest
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+  when: ansible_os_family == 'RedHat'
+
+- name: Install necessary packages
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  when: ansible_os_family == 'RedHat'
+  loop:
+    - git
+    - wget

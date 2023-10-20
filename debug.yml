@@ -1,0 +1,33 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    # - name: Debug the variable
+    #   debug:
+    #     var: item
+    #   loop: '{{ environment_variables|dict2items }}'
+
+    # - name: Start cios
+    #   ansible.builtin.command: whoami
+    #   register: output
+
+    # - name: Print output
+    #   debug:
+    #     var: output.stdout
+
+    # - name: Start cios
+    #   ansible.builtin.shell: meteor run --settings=/home/veden/cios/prod_vd.json
+    #   environment:
+    #     '{{ item.key }}': '{{ item.value }}'
+    #   loop: '{{ environment_variables|dict2items }}'
+
+    - name: Start cios
+      ansible.builtin.shell: nohup meteor run --settings=/home/veden/cios/prod_vd.json &
+      args:
+        chdir: /home/veden/cios
+      environment:
+        MONGO_URL: '{{MONGO_URL}}'
+        MONGO_OPLOG_URL: '{{MONGO_OPLOG_URL}}'
+        NODE_OPTIONS: '{{NODE_OPTIONS}}'
+        NODE_ENV: '{{NODE_ENV}}'
+        SERVER_TYPE: '{{SERVER_TYPE}}'

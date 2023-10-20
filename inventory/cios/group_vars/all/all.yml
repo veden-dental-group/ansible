@@ -1,0 +1,8 @@
+---
+ansible_ssh_private_key_file: '{{ inventory_dir }}/id_ed25519'
+ansible_user: veden
+
+nvm_node_version: '8.17.0'
+nvm_install_script_version: '0.39.3'
+
+http_proxy: 'http://172.17.10.55:3128/'

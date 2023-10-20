@@ -1,0 +1,6 @@
+---
+- name: Install dependencies
+  yum:
+    update_cache: true
+    name: wget
+    state: present

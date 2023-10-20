@@ -1,0 +1,32 @@
+---
+- hosts: all
+  gather_facts: true
+  become: true
+
+  roles:
+    - { role: setup-cios-server }
+    - { role: grzegorznowak.nvm_node }
+
+- hosts: all
+  gather_facts: false
+  become: false
+  user: veden
+  tasks:
+    - name: Install Meteor
+      ansible.builtin.shell: curl https://install.meteor.com/ | sh
+      args:
+        creates: /usr/local/bin/meteor
+
+    - name: Clone project
+      ansible.builtin.git:
+        repo: 'git@github.com:veden-dental/cios.git'
+        dest: '/home/veden/cios'
+
+    - name: Install npm dependency
+      community.general.npm:
+        path: '/home/veden/cios'
+        ci: true
+        production: true
+        registry: https://registry.npmmirror.com
+      environment:
+        http_proxy: '{{ http_proxy }}'

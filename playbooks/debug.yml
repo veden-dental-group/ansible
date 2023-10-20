@@ -1,0 +1,7 @@
+---
+- hosts: myapp
+  gather_facts: false
+  tasks:
+    - name: Print out message
+      debug: 
+        var: message

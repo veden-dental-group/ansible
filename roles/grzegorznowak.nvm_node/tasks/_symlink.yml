@@ -1,0 +1,17 @@
+---
+
+- name: Find all the binaries
+  find:
+    paths: "{{ nvm_dir }}/versions/node/v{{ nvm_node_version }}/bin"
+    patterns: '*'
+    follow: true
+    file_type: any
+  register: find_result
+
+- name: Symlink global packages into PATH for specific environments (like cron's) to be able to access them.
+  file:
+    src: "{{ item.path }}"
+    dest: "/usr/bin/{{ item.path | basename }}"
+    state: link
+    mode: "u+rwx,g+rx,o+rx"
+  loop: "{{ find_result.files }}"
